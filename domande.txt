@@ -1,0 +1,4 @@
+-- funzioni global nelle classi
+
+-- poi vediamo
+
