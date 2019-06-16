@@ -2,7 +2,7 @@
 // #include "main.cu"
 #include <cmath>
 
-void random_seed_generator(unsigned s1, unsigned s2, unsigned s3, unsigned s4) {
+void random_seed_generator(unsigned &s1, unsigned &s2, unsigned &s3, unsigned &s4) {
 
   srand(time(NULL));
 

@@ -25,7 +25,7 @@ rng::~rng() {}
 
 }*/
 
-__device__ unsigned rng::TauStep (unsigned seed, int k1, int k2, int k3, unsigned M) {
+/*__device__*/ unsigned rng::TauStep (unsigned seed, int k1, int k2, int k3, unsigned M) {
 
   unsigned b = (((seed << k1)^seed)>>k2);
   seed = ((seed&M)<<k3)^b;
@@ -33,13 +33,13 @@ __device__ unsigned rng::TauStep (unsigned seed, int k1, int k2, int k3, unsigne
 
 }
 
-__device__ unsigned rng::LNG (unsigned seed, unsigned a, unsigned b) {
+/*__device__*/ unsigned rng::LNG (unsigned seed, unsigned a, unsigned b) {
 
   return seed = (a*seed + b);
 
 }
 
-__device__ unsigned rng::hybrid() /*(unsigned s1, unsigned s2, unsigned s3, unsigned s4) */{
+/*__device__*/ unsigned rng::hybrid() /*(unsigned s1, unsigned s2, unsigned s3, unsigned s4) */{
 
   return (2.3283064365387e-10*(TauStep(m_s1, 13, 19, 12, 4294967294UL) ^
   (TauStep(m_s2, 2, 25, 4, 4294967288UL) )^
