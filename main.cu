@@ -15,15 +15,13 @@ unsigned s4 = 0;
 
 random_seed_generator(s1,s2,s3,s4);
 
-// std::cout << "seeds: " << s1 << ", " << s2 << ", " << s3 << ", " << s4 <<'\n';
-
-unsigned a = 0;
-
 rng random_number_generator(s1,s2,s3,s4);
 
-a = random_number_generator.hybrid();
+//HO FATTO MOLTE PROVE: RIESCO A GENERARE NUMERI UNIFORMI E GAUSSIANI
+//INOLTRE SONO DIVERSI OGNI VOLTA CHE LI GENERO
 
-std::cout << "a:" << a << '\n';
+// COSA MANCA? DA UNA PARTE L'IMPLEMENTAZIONE IN C++ DEGLI STEP SUCCESSIVI
+// DALL'ALTRA, APPENA LCM SARA' UP, PROVEREMO L'IMPLEMENTAZIONE IN CUDA
 
 
 return 0;
