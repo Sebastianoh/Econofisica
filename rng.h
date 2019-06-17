@@ -16,12 +16,11 @@ class rng {
   /*  __device__ */ unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
   /*  __device__*/ unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
     /*__device__*/ double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
+                  void BoxMuller (double &u, double &v);
                   double Get_uniform();
-      //metodo Box Muller
 
                     double Get_gauss();
 
-                    void BoxMuller (double &u, double &v);
 
 };
 
