@@ -3,6 +3,7 @@
  // #include "funzioni.h"
 
 class rng {
+
   private:
 
     unsigned m_s1, m_s2, m_s3, m_s4;
@@ -13,15 +14,15 @@ class rng {
     rng(unsigned, unsigned, unsigned, unsigned);  //constructor
     ~rng(); //destructor
 
-  /*  __device__ */ unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
-  /*  __device__*/ unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
-    /*__device__*/ double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
-                  double Get_uniform();
+    unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
+    unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
+    double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
+    double Get_uniform();
+
       //metodo Box Muller
 
-                    double Get_gauss();
-
-                    void BoxMuller (double &u, double &v);
+    void BoxMuller (double &u, double &v);
+    double Get_gauss();
 
 };
 
