@@ -8,11 +8,12 @@ class processo_stocastico: public rng {
 
     //a processo stocastico passo un prezzo iniziale p e il numero di intervalli per fare i path
 
-    processo_stocastico(double p, int n_steps);
+    processo_stocastico(double p, int n_steps, double E);
     ~processo_stocastico(); //destructor
 
     void eulero(double& S);
     void creazione_path();
+    double payoff();
     double Get_new_price();
   // double black_and_scholes();
   private:
@@ -22,6 +23,7 @@ class processo_stocastico: public rng {
     double sigma;
     double dt;
     int m_n_steps;
+    double m_E; //strike price, non so se considerarlo costante, o da passare al costruttore
 };
 
 #endif
