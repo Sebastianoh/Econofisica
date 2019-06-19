@@ -5,16 +5,14 @@
 class processo_stocastico: public rng {
 
   public:
-
-    //a processo stocastico passo un prezzo iniziale p e il numero di intervalli per fare i path
-
+    processo_stocastico();
     processo_stocastico(double p, int n_steps, double E);
     ~processo_stocastico(); //destructor
 
-    void eulero(double& S);
-    void creazione_path();
-    double payoff();
-    double Get_new_price();
+    __device__ __host__ void eulero(double& S);
+    __device__ __host__ void creazione_path();
+    __device__ __host__ double payoff();
+    __device__ __host__ double Get_new_price();
   // double black_and_scholes();
   private:
 

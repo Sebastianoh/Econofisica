@@ -10,19 +10,19 @@ class rng {
     double m_gauss1, m_gauss2 ; //variabili private che mi servono per i numeri gauss
 
   public:
-    rng();
+    rng();  //default constructor
     rng(unsigned, unsigned, unsigned, unsigned);  //constructor
     ~rng(); //destructor
 
-    unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
-    unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
-    double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
-    double Get_uniform();
+    __device__ __host__ unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
+    __device__ __host__ unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
+    __device__ __host__ double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
+    __device__ __host__ double Get_uniform();
 
       //metodo Box Muller
 
-    void BoxMuller (double &u, double &v);
-    double Get_gauss();
+    __device__ __host__ void BoxMuller (double &u, double &v);
+    __device__ __host__ double Get_gauss();
 
 };
 

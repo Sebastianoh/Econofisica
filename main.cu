@@ -7,29 +7,62 @@
 #include "processo_stocastico.h"
 #include "processo_stocastico.cu"
 
+using namespace std;
 //le global non posso definirle nelle classi
+
+__global__ void pricer_montecarlo(processo_stocastico* pricer ,double * array_prezzi_finali) {
+
+    int i = threadIdx.x + blockDim.x*blockIdx.x;
+    // uso -> perché gli passo una classe by pointer
+    array_prezzi_finali[i] = pricer->Get_new_price();
+
+};
 
 int main() {
 
-unsigned s1 = 0;
-unsigned s2 = 0;
-unsigned s3 = 0;
-unsigned s4 = 0;
+  int N = 15000;
 
-random_seed_generator(s1,s2,s3,s4);
+  unsigned s1 = 0;
+  unsigned s2 = 0;
+  unsigned s3 = 0;
+  unsigned s4 = 0;
 
-rng random_number_generator(s1,s2,s3,s4);
-processo_stocastico pricer(10, 50, 12);
+  random_seed_generator(s1,s2,s3,s4);
 
-std::cout << "prova path:" << pricer.Get_new_price() << '\n';
+  rng random_number_generator(s1,s2,s3,s4);
+  processo_stocastico host_pricer(10, 50, 12);
 
-//HO FATTO MOLTE PROVE: RIESCO A GENERARE NUMERI UNIFORMI E GAUSSIANI
-//INOLTRE SONO DIVERSI OGNI VOLTA CHE LI GENERO
+  double * prezzi     = new double [N];
+  double * dev_prezzi = new double [N];
 
-// COSA MANCA? DA UNA PARTE L'IMPLEMENTAZIONE IN C++ DEGLI STEP SUCCESSIVI
-// DALL'ALTRA, APPENA LCM SARA' UP, PROVEREMO L'IMPLEMENTAZIONE IN CUDA
+  //storage su cui copiare host pricer
 
-// std::cout << "prova eulero: " << pricer.Get_new_price() << '\n';   questo funziona
+  processo_stocastico *dev_pricer;
+
+  cudaMalloc( (void **)&dev_pricer, N*sizeof(processo_stocastico) );
+  cudaMalloc( (void **)&dev_prezzi, N*sizeof(double) );
+
+  // copio:
+  cudaMemcpy(dev_pricer, &host_pricer, N*sizeof(processo_stocastico), cudaMemcpyHostToDevice);
+  pricer_montecarlo<<<1,1>>>(dev_pricer, dev_prezzi);
+
+  cudaMemcpy(prezzi, dev_prezzi, N*sizeof(double), cudaMemcpyDeviceToHost);
+
+  cudaFree(dev_pricer);
+  cudaFree(dev_prezzi);
+
+    // prova
+    for (size_t i = 0; i < 15; i++) {
+      std::cout << "prezzi: " << prezzi[i] << '\n';
+    }
+
+
+
+
+
+
+
+
 
 
 
