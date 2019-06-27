@@ -44,6 +44,10 @@ int main() {
 
   // copio:
   cudaMemcpy(&dev_pricer, &host_pricer, N*sizeof(processo_stocastico), cudaMemcpyHostToDevice);
+
+  //prova senza troppe pretese,
+  // still non funziona
+
   pricer_montecarlo<<<10,2>>>(dev_pricer, dev_prezzi);
 
   for (size_t i = 0; i < 15; i++) {
