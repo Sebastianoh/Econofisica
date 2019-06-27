@@ -43,8 +43,12 @@ int main() {
   cudaMalloc( (void **)&dev_prezzi, N*sizeof(double) );
 
   // copio:
-  cudaMemcpy(dev_pricer, &host_pricer, N*sizeof(processo_stocastico), cudaMemcpyHostToDevice);
-  pricer_montecarlo<<<1,1>>>(dev_pricer, dev_prezzi);
+  cudaMemcpy(&dev_pricer, &host_pricer, N*sizeof(processo_stocastico), cudaMemcpyHostToDevice);
+  pricer_montecarlo<<<10,2>>>(dev_pricer, dev_prezzi);
+
+  for (size_t i = 0; i < 15; i++) {
+    std::cout << "prezzi : " << dev_prezzi[i] << '\n';
+  };
 
   cudaMemcpy(prezzi, dev_prezzi, N*sizeof(double), cudaMemcpyDeviceToHost);
 
@@ -52,9 +56,9 @@ int main() {
   cudaFree(dev_prezzi);
 
     // prova
-    for (size_t i = 0; i < 15; i++) {
-      std::cout << "prezzi: " << prezzi[i] << '\n';
-    }
+    // for (size_t i = 0; i < 15; i++) {
+      // std::cout << "prezzi: " << prezzi[i] << '\n';
+    // };
 
 
 
