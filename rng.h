@@ -10,9 +10,9 @@ class rng {
     double m_gauss1, m_gauss2 ; //variabili private che mi servono per i numeri gauss
 
   public:
-    rng();  //default constructor
-    rng(unsigned, unsigned, unsigned, unsigned);  //constructor
-    ~rng(); //destructor
+    __device__ __host__ rng();  //default constructor
+    __device__ __host__ rng(unsigned, unsigned, unsigned, unsigned);  //constructor
+    __device__ __host__ ~rng(); //destructor
 
     __device__ __host__ unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
     __device__ __host__ unsigned LNG     (unsigned &seed, unsigned a, unsigned b);

@@ -5,9 +5,9 @@
 class processo_stocastico: public rng {
 
   public:
-    processo_stocastico();
-    processo_stocastico(double p, int n_steps, double E);
-    ~processo_stocastico(); //destructor
+    __device__ __host__ processo_stocastico();
+    __device__ __host__ processo_stocastico(double p, int n_steps, double E);
+    __device__ __host__ ~processo_stocastico(); //destructor
 
     __device__ __host__ void eulero(double& S);
     __device__ __host__ void creazione_path();

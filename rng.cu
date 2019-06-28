@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cstdlib>
 
-rng::rng(){
+__device__ __host__ rng::rng(){
   m_s1 = 0;
   m_s2 = 0;
   m_s3 = 0;
@@ -13,7 +13,7 @@ rng::rng(){
   m_gauss2 = 0;
 }
 
-rng::rng(unsigned s1, unsigned s2, unsigned s3, unsigned s4) {
+__device__ __host__ rng::rng(unsigned s1, unsigned s2, unsigned s3, unsigned s4) {
 
   m_s1 = s1;
   m_s2 = s2;
@@ -22,7 +22,7 @@ rng::rng(unsigned s1, unsigned s2, unsigned s3, unsigned s4) {
 
 }
 
-rng::~rng() {}
+__device__ __host__ rng::~rng() {}
 
 __device__ __host__ unsigned rng::TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M) {
 

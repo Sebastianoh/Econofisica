@@ -10,11 +10,16 @@
 using namespace std;
 //le global non posso definirle nelle classi
 
-__global__ void pricer_montecarlo(processo_stocastico* pricer ,double * array_prezzi_finali) {
+__host__ void pricer_montecarlo(processo_stocastico pricer ,double * array_prezzi_finali) {
 
-    int i = threadIdx.x + blockDim.x*blockIdx.x;
+    // int i = threadIdx.x + blockDim.x*blockIdx.x;
+
+    processo_stocastico gpu_pricer(100, 1, 100);
     // uso -> perché gli passo una classe by pointer
-    array_prezzi_finali[i] = pricer->Get_new_price();
+    for (size_t i = 0; i < 10; i++) {
+      /* code */
+      array_prezzi_finali[i] = gpu_pricer.Get_gauss();
+    }
 
 };
 
@@ -32,53 +37,41 @@ int main() {
   rng random_number_generator(s1,s2,s3,s4);
   processo_stocastico host_pricer(10, 50, 12);
 
+
+
+// std::cout << "1:  " << host_pricer.Get_gauss()     << '\n';
+// std::cout << "2:  " << host_pricer.Get_uniform()   << '\n';
+// std::cout << "3:  " << host_pricer.Get_new_price() << '\n';
+
+
   double * prezzi     = new double [N];
   double * dev_prezzi = new double [N];
 
   //storage su cui copiare host pricer
 
-  processo_stocastico *dev_pricer;
+  // processo_stocastico *dev_pricer;
 
-  cudaMalloc( (void **)&dev_pricer, N*sizeof(processo_stocastico) );
-  cudaMalloc( (void **)&dev_prezzi, N*sizeof(double) );
+  // cudaMalloc( (void **)&dev_pricer, sizeof(processo_stocastico) );
+  // cudaMalloc( (void **)&dev_prezzi, N*sizeof(double) );
 
   // copio:
-  cudaMemcpy(&dev_pricer, &host_pricer, N*sizeof(processo_stocastico), cudaMemcpyHostToDevice);
+  // cudaMemcpy(&dev_pricer, &host_pricer, sizeof(processo_stocastico), cudaMemcpyHostToDevice);
 
   //prova senza troppe pretese,
   // still non funziona
+  pricer_montecarlo(host_pricer, prezzi);
 
-  pricer_montecarlo<<<10,2>>>(dev_pricer, dev_prezzi);
+  // cudaMemcpy(prezzi, dev_prezzi, N*sizeof(double), cudaMemcpyDeviceToHost);
+  // cudaFree(dev_pricer);
 
-  for (size_t i = 0; i < 15; i++) {
-    std::cout << "prezzi : " << dev_prezzi[i] << '\n';
-  };
+for (size_t i = 0; i < 10; i++) {
+  std::cout << "prezzi:  " << prezzi[i] <<'\n';
+  /* code */
+}
 
-  cudaMemcpy(prezzi, dev_prezzi, N*sizeof(double), cudaMemcpyDeviceToHost);
 
-  cudaFree(dev_pricer);
+
   cudaFree(dev_prezzi);
-
-    // prova
-    // for (size_t i = 0; i < 15; i++) {
-      // std::cout << "prezzi: " << prezzi[i] << '\n';
-    // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 return 0;
 }

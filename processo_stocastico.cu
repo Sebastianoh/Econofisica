@@ -3,7 +3,7 @@
 #include <cmath>
 #include <cstdlib>
 
-processo_stocastico::processo_stocastico() {
+__device__ __host__ processo_stocastico::processo_stocastico() {
   m_p            = 0;
   m_E            = 0;
   dt             = 0.5;   //valore a caso
@@ -14,17 +14,17 @@ processo_stocastico::processo_stocastico() {
 
 
 
-processo_stocastico::processo_stocastico(double p, int n_steps, double E) {
+__device__ __host__ processo_stocastico::processo_stocastico(double p, int n_steps, double E) {
 
   m_p            = p;
   m_E            = E;
-  dt             = 0.5;   //valore a caso
-  sigma          = 0.5;   //valore a caso
+  dt             = 1;   //valore a caso
+  sigma          = 0.25;   //valore a caso
   risk_free_rate = 0.02;
   m_n_steps      = n_steps;
 }
 //destructor
-processo_stocastico::~processo_stocastico() {
+__device__ __host__ processo_stocastico::~processo_stocastico() {
 }
 
 __device__ __host__ void processo_stocastico::eulero(double& S) {
