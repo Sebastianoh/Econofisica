@@ -12,13 +12,13 @@ using namespace std;
 
 __global__ void test_rng( double * array_prova) {
 
-    rng random_number_generator(1, 150, 155, 1555);
-
+    processo_stocastico host_pricer(10, 50, 12); 
+    
     int i = threadIdx.x + blockDim.x*blockIdx.x;
 
     // processo_stocastico gpu_pricer(100, 1, 100);
     // uso -> perché gli passo una classe by pointer
-    array_prova[i] = random_number_generator.Get_gauss();
+    array_prova[i] = host_pricer.Get_new_price();
 
 };
 
