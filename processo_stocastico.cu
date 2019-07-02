@@ -14,14 +14,14 @@ __device__ __host__ processo_stocastico::processo_stocastico() {
 
 
 
-__device__ __host__ processo_stocastico::processo_stocastico(double p, int n_steps, double E) {
+__device__ __host__ processo_stocastico::processo_stocastico(input_option_data option, input_market_data market) {
+  m_p            = market.S_0;
+  sigma          = market.sigma;
+  risk_free_rate = market.risk_free_rate;
 
-  m_p            = p;
-  m_E            = E;
-  dt             = 1;   //valore a caso
-  sigma          = 0.25;   //valore a caso
-  risk_free_rate = 0.02;
-  m_n_steps      = n_steps;
+  m_E            = option.E;
+  dt             = option.delta_t;
+  m_n_steps      = option.num_intervals;
 }
 //destructor
 __device__ __host__ processo_stocastico::~processo_stocastico() {
