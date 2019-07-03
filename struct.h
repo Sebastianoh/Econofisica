@@ -14,17 +14,17 @@ struct input_option_data {
 	double num_intervals;
 };
 
+struct input_mc_data {
+	int N_simulazioni;
+	int N_tb; //numero thread per blocco
+	int N_b; // numero blocchi
+};
+
 struct output_mc_data {
 	double price_mc;
 	double err_mc;
 	double err_bs; //errore rispetto al risultato esatto
 	int tick; //tempo di calcolo in ms
-};
-
-struct input_mc_data {
-	int N_simulazioni;
-	int N_tb; //numero thread per blocco
-	int N_b; // numero blocchi
 };
 
 #endif
