@@ -11,7 +11,7 @@ struct input_market_data {
 struct input_option_data {
 	double E; //strike price
 	double delta_t;
-	double num_intervals;
+	int num_intervals;
 };
 
 struct input_mc_data {

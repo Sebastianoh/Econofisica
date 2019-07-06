@@ -1,16 +1,16 @@
-#ifndef __processo_stocastico_h__
-#define __processo_stocastico_h__
+#ifndef __path_h__
+#define __path_h__
 
 #include "struct.h"
 
 // ########## ADESSO PROCESSO STOCASTICO NON EREDITA PIÙ DA RNG PERCHÉ NON MI ANDAVANO BENE I NUMERI GAUSS
 // ######### HO DECISO DI PASSARLI AL COSTRUTTORE DEL PROCESSO. OVVIAMENTE PRIMA DEVO GENERARLI CON GET GAUSS
-class processo_stocastico {
+class path {
 
   public:
-    __device__ __host__ processo_stocastico();
-    __device__ __host__ processo_stocastico(input_option_data o, input_market_data m);
-    __device__ __host__ ~processo_stocastico(); //destructor
+    __device__ __host__ path();
+    __device__ __host__ path(input_option_data o, input_market_data m);
+    __device__ __host__ ~path(); //destructor
 
     __device__ __host__ double eulero(double gauss);
     // __device__ __host__ double payoff();
