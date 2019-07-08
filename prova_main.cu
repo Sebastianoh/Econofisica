@@ -15,18 +15,20 @@
 using namespace std;
 //le global non posso definirle nelle classi
 
+__global__ void test_rng(rng R, path P, double * array_prova) {
 
+    rng  thread_rng  = R;
+    path thread_path = P;
+    double dummy;
 
-// __global__ void test_rng( double * array_prova) {
-    // path host_pricer(10, 50, 12);
+    int i = threadIdx.x + blockDim.x*blockIdx.x;
 
-    // int i = threadIdx.x + blockDim.x*blockIdx.x;
+      for (size_t j = 0; j < 10; j++) {
+        dummy = thread_path.eulero(thread_rng.Get_gauss());
+      }
 
-    // path gpu_pricer(100, 1, 100);
-    // uso -> perché gli passo una classe by pointer
-    // array_prova[i] = host_pricer.Get_new_price();
-
-// };
+    array_prova[i] = dummy;
+};
 
 int main() {
 
@@ -37,6 +39,8 @@ int main() {
   std::cout << "" << '\n';
 
   unsigned s1,s2,s3,s4;
+  double * array = new double [100];
+  double * dev_array = new double [100];
 
   input_market_data market;
   input_option_data option;
@@ -47,35 +51,19 @@ int main() {
 
   rng random_number_generator(s1,s2,s3,s4);
 
-  rng generator2 = random_number_generator;
-
   path path_creator(option, market);
 
-  path path2 = path_creator;
+  cudaMalloc( (void **)&dev_array, 100*sizeof(double));
 
-  // ################ CREO UN PATH
+  test_rng<<<2,20>>>(random_number_generator, path_creator, dev_array);
 
-  double final_price_test[data_montecarlo.N_tb][option.num_intervals];
+  cudaMemcpy(array, dev_array, 100*sizeof(double), cudaMemcpyDeviceToHost);
 
-    for (size_t j = 0; j < data_montecarlo.N_tb; j++) {
+  cudaFree(dev_array);
 
-
-      for (size_t i = 0; i < option.num_intervals; i++) {
-
-        final_price_test[j][i] = path2.eulero(generator2.Get_gauss());
-        std::cout << "final_price_test:   " << final_price_test[j][i] << '\n';
-
-      }
+    for (size_t i = 0; i < 10; i++) {
+      std::cout << "array:" << array[i] << '\n';
     }
-  std::cout << "" << '\n';
-  std::cout << "##########################################" << '\n';
-  std::cout << "" << '\n';
-
-  // montecarlo          pricer_mc(data_montecarlo);
-
-  //struct option, struct data
-
-
 
 return 0;
 }
