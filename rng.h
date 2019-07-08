@@ -13,14 +13,14 @@ class rng {
     __device__ __host__ rng();  //default constructor
     __device__ __host__ rng(unsigned, unsigned, unsigned, unsigned);  //constructor
     __device__ __host__ ~rng(); //destructor
+    __device__ __host__ rng(const rng &rng2);
+
+    // ####################################
 
     __device__ __host__ unsigned TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M);
     __device__ __host__ unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
     __device__ __host__ double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
     __device__ __host__ double Get_uniform();
-
-      //metodo Box Muller
-
     __device__ __host__ void BoxMuller (double &u, double &v);
     __device__ __host__ double Get_gauss();
 

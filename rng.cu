@@ -20,7 +20,24 @@ __device__ __host__ rng::rng(unsigned s1, unsigned s2, unsigned s3, unsigned s4)
   m_s3 = s3;
   m_s4 = s4;
 
+  m_gauss1 = 0;
+  m_gauss2 = 0;
+
 }
+
+__device__ __host__ rng::rng(const rng &rng2){
+
+  m_s1 = rng2.m_s1;
+  m_s2 = rng2.m_s2;
+  m_s3 = rng2.m_s3;
+  m_s4 = rng2.m_s4;
+
+  m_gauss1 = rng2.m_gauss1;
+  m_gauss2 = rng2.m_gauss2;
+
+}
+
+
 
 __device__ __host__ rng::~rng() {}
 

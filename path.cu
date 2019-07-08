@@ -25,6 +25,20 @@ __device__ __host__ path::path(input_option_data option, input_market_data marke
   m_n_steps      = option.num_intervals;
 
 }
+
+__device__ __host__ path::path(const path &path2) {
+  m_p            = path2.m_p;
+  sigma          = path2.sigma;
+  risk_free_rate = path2.risk_free_rate;
+
+  m_E            = path2.m_E;
+  dt             = path2.dt;
+  m_n_steps      = path2.m_n_steps;
+
+}
+
+
+
 //destructor
 __device__ __host__ path::~path() {
 }

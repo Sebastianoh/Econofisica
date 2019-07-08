@@ -11,11 +11,13 @@ class path {
     __device__ __host__ path();
     __device__ __host__ path(input_option_data o, input_market_data m);
     __device__ __host__ ~path(); //destructor
+    __device__ __host__ path(const path &path2);
+
 
     __device__ __host__ double eulero(double gauss);
     // __device__ __host__ double payoff();
     // __device__ __host__ double Get_new_price();
-  // double black_and_scholes();
+    // double black_and_scholes();
   private:
 
     double risk_free_rate;

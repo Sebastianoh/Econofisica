@@ -16,8 +16,8 @@ using namespace std;
 //le global non posso definirle nelle classi
 
 
-// __global__ void test_rng( double * array_prova) {
 
+// __global__ void test_rng( double * array_prova) {
     // path host_pricer(10, 50, 12);
 
     // int i = threadIdx.x + blockDim.x*blockIdx.x;
@@ -47,7 +47,11 @@ int main() {
 
   rng random_number_generator(s1,s2,s3,s4);
 
+  rng generator2 = random_number_generator;
+
   path path_creator(option, market);
+
+  path path2 = path_creator;
 
   // ################ CREO UN PATH
 
@@ -58,7 +62,7 @@ int main() {
 
       for (size_t i = 0; i < option.num_intervals; i++) {
 
-        final_price_test[j][i] = path_creator.eulero(random_number_generator.Get_gauss());
+        final_price_test[j][i] = path2.eulero(generator2.Get_gauss());
         std::cout << "final_price_test:   " << final_price_test[j][i] << '\n';
 
       }
