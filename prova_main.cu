@@ -7,31 +7,26 @@
 #include "rng.cu"
 #include "struct.h"
 #include "funzioni.h"
-#include "montecarlo.h"
-#include "montecarlo.cu"
 #include "path.h"
-#include "path.cu"
 
 using namespace std;
 //le global non posso definirle nelle classi
 
-__global__ void test_rng(path P, double * array_prova) {
-
-    unsigned s1,s2,s3,s4;
-    random_seed_generator(s1,s2,s3,s4);
-
-    rng thread_rng(s1,s2,s3,s4);
-
-    path thread_path = P;
-    double dummy;
-
-    int i = threadIdx.x + blockDim.x*blockIdx.x;
-
+__device__ __host__ double pricer(path thread_path, rng thread_rng ) {
+  double dummy = 0;
       for (size_t j = 0; j < 10; j++) {
         dummy = thread_path.eulero(thread_rng.Get_gauss());
       }
+  return dummy;
+}
 
-    array_prova[i] = dummy;
+__global__ void test_rng(path P, double * array_prova) {
+  int i = threadIdx.x + blockDim.x*blockIdx.x;
+
+    rng thread_rng(1+i, 2345+i, 1234+i, 16545 +i);
+    path thread_path = P;
+
+    array_prova[i] = pricer(thread_path, thread_rng);
 };
 
 int main() {
