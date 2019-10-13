@@ -27,4 +27,13 @@ struct output_mc_data {
 	int tick; //tempo di calcolo in ms
 };
 
+struct dati_anagrafici_opzione {
+	double B;
+	double K;
+	double Nozionale;  //EUR
+	double T;  //years
+	double m;  //date di fixing
+
+};
+
 #endif
