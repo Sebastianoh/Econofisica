@@ -1,5 +1,5 @@
- #ifndef __rng_h__
- #define __rng_h__
+ #ifndef __rng_cuh__
+ #define __rng_cuh__
  // #include "funzioni.h"
 
 class rng {
@@ -21,7 +21,7 @@ class rng {
     __device__ __host__ unsigned LNG     (unsigned &seed, unsigned a, unsigned b);
     __device__ __host__ double hybrid();  //(unsigned s1, unsigned s2, unsigned s3, unsigned s4);
     __device__ __host__ double Get_uniform();
-    __device__ __host__ void BoxMuller (double &u, double &v);
+    // __device__ __host__ void BoxMuller (double &u, double &v);
     __device__ __host__ double Get_gauss();
 
 };

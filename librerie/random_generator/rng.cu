@@ -1,4 +1,4 @@
-#include "rng.h"
+#include "rng.cuh"
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
@@ -37,8 +37,6 @@ __device__ __host__ rng::rng(const rng &rng2){
 
 }
 
-
-
 __device__ __host__ rng::~rng() {}
 
 __device__ __host__ unsigned rng::TauStep (unsigned &seed, int k1, int k2, int k3, unsigned M) {
@@ -68,15 +66,10 @@ __device__ __host__ double rng::Get_uniform() {
   return rng::hybrid();
 }
 
-
-__device__ __host__ void rng::BoxMuller (double &u, double &v) {
-
-    u = sqrt(-2*log(rng::Get_uniform()))*cos(2*M_PI*rng::Get_uniform());
-    v = sqrt(-2*log(rng::Get_uniform()))*sin(2*M_PI*rng::Get_uniform());
-
-}
-
 __device__ __host__ double rng::Get_gauss() {
-  rng::BoxMuller(m_gauss1, m_gauss2);
-  return m_gauss1;
+
+    double u = sqrt(-2*log(rng::Get_uniform()))*cos(2*M_PI*rng::Get_uniform());
+    double v = sqrt(-2*log(rng::Get_uniform()))*sin(2*M_PI*rng::Get_uniform());
+
+    return u;
 };
