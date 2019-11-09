@@ -12,16 +12,19 @@ class path {
 
     // __device__ __host__ path(const path &path2);
 
-    __device__ __host__ void   eulero(double gauss);
     __device__ __host__ double GetPrice() ;
+    __device__ __host__ void   eulero(double gauss);
+    __device__ __host__ void   exact (double gauss);
+
 
     __device__ __host__ void   payoff_evaluator();
     __device__ __host__ double Get_payoff();
-
+    __device__ __host__ double Get_controller();
     __device__ __host__ void corridor_controller(double, double);
-    // __device__ __host__ double Get_new_price();
+    __device__ __host__ double Get_test() {return m_test_variable;}
     // double black_and_scholes();
   private:
+
 
     //dati mercato
 
@@ -46,9 +49,10 @@ class path {
     double m_B;
     double m_K;
     double m_N; //Nozionale
-    double m_corridor; //sarebbe P_i della formula
+    int m_corridor; //sarebbe P_i della formula
     // int    m_date_fixing;
 
+    int m_test_variable;
 };
 
 #endif

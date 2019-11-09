@@ -12,10 +12,10 @@ using namespace std;
 
     rng test_generator(1, 762, 129, 234567);
 
-    input_market_data market_data          = {100, 0.01, 0.1};
-    input_option_data option_data          = {0, 10, 1, 1, 100, 1, 1, 1};
-    input_option_data option_data_plain    = {1, 10, 1, 1, 100, 1, 1, 1};
-    input_option_data option_data_corridor = {2, 10, 1, 1, 100, 1, 1, 1};
+    input_market_data market_data          = {100, 0.01, 0.01};
+    input_option_data option_data          = {0, 100, 1, 1, 100, 0, 0, 1};
+    input_option_data option_data_plain    = {1, 100, 1, 1, 100, 0, 0, 1};
+    input_option_data option_data_corridor = {2, 100, 1, 1, 100, 0.5, 0, 1};
 
     //farò una funzione che le carica... in realtà ce l'ho, però per ora bona
     // poi dovrei farla da file...
@@ -60,6 +60,10 @@ using namespace std;
     simulator_corridor.payoff_evaluator();
 
     std::cout << "###################" << '\n';
+    std::cout << "test controller 3:  " << simulator_corridor.Get_controller() << '\n';
+    std::cout << "test dummy variable :  " << simulator_corridor.Get_test() << '\n';
+
+
     std::cout << "test payoff 3:  " << simulator_corridor.Get_payoff() << '\n';
     std::cout << "###################" << '\n';
 
