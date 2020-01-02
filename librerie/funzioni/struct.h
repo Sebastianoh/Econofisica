@@ -36,6 +36,13 @@ struct input_mc_data {
 
 };
 
+struct output_statistica {
+
+	double media_payoff;
+	double dev_standard;
+
+};
+
 struct output_mc_data {
 
 	double price_mc;
@@ -44,6 +51,8 @@ struct output_mc_data {
 	int tick; //tempo di calcolo in ms
 
 };
+
+
 
 
 #endif

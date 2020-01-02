@@ -1,16 +1,17 @@
 #include <iostream>
 #include <cmath>
-#include "/home/sebastiano/Scrivania/airoldi/librerie/support_functions/struct.h"
+#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
 #include "statistica.h"
 
 using namespace std;
 
 int main() {
 
-  input_mc_data data_montecarlo = {10,1,1};
-  statistica test_stata(data_montecarlo);
+  // input_mc_data data_montecarlo = {10,1,1};
 
-    for (size_t i = 0; i < data_montecarlo.N_simulazioni; i++) {
+  statistica test_stata;
+
+    for (size_t i = 0; i <1000; i++) {
 
       double dummy = 10/(1+i);
       test_stata.analisi(dummy);

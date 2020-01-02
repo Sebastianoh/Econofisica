@@ -4,16 +4,12 @@
 
 class rng {
 
-  private:
-
-    unsigned m_s1, m_s2, m_s3, m_s4;
-    double m_gauss1, m_gauss2 ; //variabili private che mi servono per i numeri gauss
 
   public:
     __device__ __host__ rng();  //default constructor
-    __device__ __host__ rng(unsigned, unsigned, unsigned, unsigned);  //constructor
     __device__ __host__ ~rng(); //destructor
     __device__ __host__ rng(const rng &rng2);
+    __device__ __host__ rng(unsigned, unsigned, unsigned, unsigned);  //constructor
 
     // ####################################
 
@@ -23,6 +19,11 @@ class rng {
     __device__ __host__ double Get_uniform();
     // __device__ __host__ void BoxMuller (double &u, double &v);
     __device__ __host__ double Get_gauss();
+
+  private:
+
+    unsigned m_s1, m_s2, m_s3, m_s4;
+    double m_gauss1, m_gauss2 ; //variabili private che mi servono per i numeri gauss
 
 };
 

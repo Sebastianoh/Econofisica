@@ -60,6 +60,11 @@ __device__ __host__ path::~path() {
 
 }
 
+__device__ __host__ void path::reset_price(input_market_data m){
+  m_price = m.prezzo_iniziale;
+}
+
+
 __device__ __host__ double path::GetPrice() {
   return m_price;
 }
@@ -73,8 +78,8 @@ __device__ __host__ double path::Get_controller() {
 
 __device__ __host__ void path::corridor_controller(double prezzo1, double prezzo2) {
 
-  double value_to_be_checked = (1./sqrt(m_delta_time)) *log( prezzo2/ prezzo1 );
   double barriera            = m_B * m_volatility;
+  double value_to_be_checked = (1./sqrt(m_delta_time))*log( prezzo2/prezzo1 );
 
     if ( fabs(value_to_be_checked) < barriera) {
       ++(m_corridor);
@@ -100,6 +105,7 @@ __device__ __host__ void path::eulero(double gauss) {
 
 __device__ __host__ void  path::exact(double gauss) {
 
+  double price_i;
   price_i = m_price * exp(m_risk_free_rate -0.5*pow(m_volatility,2)*(m_delta_time)
           + m_volatility*gauss*sqrt(m_delta_time));
 
@@ -132,16 +138,12 @@ __device__ __host__ void path::payoff_evaluator() {
 
   if (m_option_type == 2) {
 
-    m_payoff = m_N *(max(( (1./m_numero_steps) * m_corridor ) - m_K, 0.));
+    m_payoff = m_N *(max( (static_cast<double>((1./m_numero_steps) * m_corridor) ) - m_K, 0.));
 
   }
   // else m_payoff = -1000;
 
 }
-
-
-
-
 
 __device__ __host__ double path::Get_payoff() {
 

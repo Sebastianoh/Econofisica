@@ -1,5 +1,5 @@
 #include "path.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/support_functions/struct.h"
+#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
 #include "/home/sebastiano/Scrivania/airoldi/librerie/random_generator/rng.cuh"
 
 #include <iostream>

@@ -1,27 +1,27 @@
 #ifndef __path_h__
 #define __path_h__
 
-#include "/home/sebastiano/Scrivania/airoldi/librerie/support_functions/struct.h"
+#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
 
 class path {
 
   public:
     __device__ __host__ path();
-    __device__ __host__ path(input_option_data o, input_market_data m);
     __device__ __host__ ~path(); //destructor
+    __device__ __host__ path(input_option_data o, input_market_data m);
 
-    // __device__ __host__ path(const path &path2);
+    __device__ __host__ void reset_price(input_market_data m);
 
-    __device__ __host__ double GetPrice() ;
     __device__ __host__ void   eulero(double gauss);
     __device__ __host__ void   exact (double gauss);
+    __device__ __host__ double GetPrice() ;
 
 
-    __device__ __host__ void   payoff_evaluator();
     __device__ __host__ double Get_payoff();
     __device__ __host__ double Get_controller();
-    __device__ __host__ void corridor_controller(double, double);
     __device__ __host__ double Get_test() {return m_test_variable;}
+    __device__ __host__ void   payoff_evaluator();
+    __device__ __host__ void   corridor_controller(double, double);
     // double black_and_scholes();
   private:
 

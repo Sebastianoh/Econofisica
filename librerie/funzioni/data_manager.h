@@ -1,0 +1,2 @@
+#ifndef __results_manager_h__
+#define __results_manager_h__
