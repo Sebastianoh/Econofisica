@@ -1,4 +1,4 @@
-TARGETS=../random_generator/rng.o ../path/path.o ../statistica/statistica.o unit_test.o
+TARGETS=resultsManager.o unit_test.o
 
 NVCC=nvcc
 
