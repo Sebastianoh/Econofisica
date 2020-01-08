@@ -1,0 +1,10 @@
+##INPUT_MARKET_DATA
+#prezzo_iniziale
+100
+#risk_free_rate
+0.02
+#volatility
+0.02
+##INPUT_OPTION_DATA
+#option_type
+1

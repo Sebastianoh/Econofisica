@@ -68,9 +68,6 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 
   int dummy_thread_number = 1000;
 
-
-    // porcaccio dio
-
 //CPU OUTPUT VECTOR
   output_statistica * output = new output_statistica[dummy_thread_number];
 //DEV OUTPUT VECTOR
