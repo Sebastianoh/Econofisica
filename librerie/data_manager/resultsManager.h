@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
+
 // #include "resultsManager.cu"
 
 class resultsManager {
@@ -34,7 +36,7 @@ class resultsManager {
 
     void Set_output_file(std::string file);
                          //market data //option data //mc_data
-    void Set_structs_value(&struct , &struct, &struct, std::string file);//le varie strutture? i guess)
+    void Set_structs_value( input_market_data &x, input_option_data &y, input_mc_data &z, std::string file);//le varie strutture? i guess)
 
 };
 

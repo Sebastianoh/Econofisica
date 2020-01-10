@@ -1,38 +1,48 @@
+#include <vector>
 #include <string>
 #include <fstream>
 #include <iostream>
 #include "resultsManager.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
+// #include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
 
 using namespace std;
 
-void resultsManager::Set_Set_structs_value(&input_market_data, &input_option_data, &input_mc_data, string file) {
-
+void resultsManager::Set_structs_value( input_market_data &x, input_option_data &y, input_mc_data &z, std::string file) {
+  vector<string> data_vector;
   ifstream myfile;
   myfile.open(file);
 
     if (myfile.is_open()) {
       std::cout << "file is open" << '\n';
-    }
+      string line;
+      while (getline(myfile, line))
 
-    while (!myfile.eof()) {
+        if (line[0] != '#')
 
-      char c;
+          data_vector.push_back(line);
 
-        if (myfile.get() == c) {
+    } else std::cout << "file is not open " << '\n';
 
-          myfile.ignore(1000, '\n');
+    //market data
+    x.prezzo_iniziale = stod(data_vector[0]);
+    x.risk_free_rate  = stod(data_vector[1]);
+    x.volatility      = stod(data_vector[2]);
+    //option data
+    y.option_type     = stod(data_vector[3]);
+    y.numero_steps    = stoi(data_vector[4]);
+    y.delta_time      = stod(data_vector[5]);
+    y.time_to_maturity= stod(data_vector[6]);
+    y.strike_price    = stod(data_vector[7]);
+    y.B               = stod(data_vector[8]);
+    y.K               = stod(data_vector[9]);
+    y.N               = stod(data_vector[10]);
+    //montecarlo data
+    z.N_simulazioni   = stoi(data_vector[11]);
+    z.N_tb            = stoi(data_vector[12]);
+    z.N_b             = stoi(data_vector[13]);
 
-        }
-
-      // market data
-      myfile >> input_market_data.prezzo_iniziale; myfile >> input_market_data.risk_free_rate; myfile >> input_market_data.volatility;
-      // option data
-      myfile >> input_option_data.option_type; myfile >> input_option_data.numero_steps; myfile >> input_option_data.delta_time; myfile >> input_option_data.time_to_maturity; myfile >> input_option_data.strike_price; myfile >> input_option_data.B; myfile >> input_option_data.K; myfile >> input_option_data.N;
-      // mc data
-      myfile >> input_mc_data.N_simulazioni; myfile >> input_mc_data.N_tb; myfile >> input_mc_data.N_b;
-
-    }
+  myfile.close();
+  std::cout << "file has been closed" << '\n';
 
 }
 
