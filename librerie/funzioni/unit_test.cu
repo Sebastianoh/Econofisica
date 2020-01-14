@@ -18,18 +18,17 @@ int main() {
 
   output_statistica *output = new output_statistica[mc_data.N_simulazioni];
 
-    for (int i = 0; i < 10; i++) {
-      /* code */
-      montecarlo_simulator(market_data, option_data, mc_data, output, i);
+  std::cout << "" << '\n';
+
+  CPU_montecarlo_simulator(market_data, option_data, mc_data, output);
+
+    for (size_t j = 0; j < 100; j++) {
+
+      std::cout << "test 1:     " << output[j].media_payoff << '\n';
+      std::cout << "test dev:   " << output[j].dev_standard << '\n';
 
     }
 
-  for (size_t j = 0; j < 10; j++) {
-
-    std::cout << "test 1:     " << output[j].media_payoff << '\n';
-    std::cout << "test dev:   " << output[j].dev_standard << '\n';
-
-  }
 
 return 0;
 
