@@ -20,7 +20,13 @@ int main() {
 
   std::cout << "" << '\n';
 
-  CPU_montecarlo_simulator(market_data, option_data, mc_data, output);
+  unsigned * array = new unsigned[mc_data.N_simulazioni];
+
+  set_random_vector(array);
+
+  std::cout << "" << '\n';
+
+  CPU_montecarlo_simulator(market_data, option_data, mc_data, output, array);
 
     for (size_t j = 0; j < 100; j++) {
 

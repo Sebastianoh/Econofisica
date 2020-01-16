@@ -7,29 +7,26 @@
 #include "/home/sebastiano/Scrivania/airoldi/librerie/statistica/statistica.h"
 #include "/home/sebastiano/Scrivania/airoldi/librerie/random_generator/rng.cuh"
 
-/*__device__*/ __host__ void montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, int thread_number) {
+__host__ void set_random_vector (unsigned  * &(array)) {
 
-  //ovviamente così non è bello, bisogna generarne uno per ogni simulazione che voglio
-  path path_simulator(option_data, market_data);
+  for (size_t i = 0; i < 10000; i++) {
+    array[i] = rand() % 128 + 100000;
 
-  // std::cout << "rand numbers:  " << s1 << ", " << s2 << ", " << s3 << ", "  << s4 << '\n';
-  // statistica *stat1 = new statistica[mc_data.N_simulazioni];
+  }
+}
+
+__device__ __host__ void montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, int thread_number, unsigned * rand_vec) {
+
   statistica stat;
+  path path_simulator(option_data, market_data);
 
     for (size_t i = 0; i < mc_data.N_simulazioni; i++) {
 
-      int s1,s2,s3,s4;
-      s1 = rand() % 100000;
-      s2 = rand() % 128 +100000;
-      s3 = rand() % 128 +100000;
-      s4 = rand() % 128 +100000;
-
-      rng  test_generator(s1,s2,s3,s4);
-      // stat1[i].set_state(stat2);
+      rng  thread_generator(rand_vec[i+thread_number],rand_vec[i+thread_number+1],rand_vec[i+thread_number+2],rand_vec[i+thread_number+3]);
 
         for (size_t j = 0; j < option_data.numero_steps; j++) {
 
-          path_simulator.eulero(test_generator.Get_gauss());
+          path_simulator.eulero(thread_generator.Get_gauss());
 
         }
 
@@ -86,13 +83,15 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 */
 
 // DEVO FARE LA CPU-GPU SIMULATOR
-__host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output ) {
+__host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, unsigned * rand_vec) {
 
   int dummy_thread_number = 1000;
 
     for (size_t i = 0; i < dummy_thread_number ; i++) {
 
-      montecarlo_simulator(market_data, option_data, mc_data, output, i);
+      montecarlo_simulator(market_data, option_data, mc_data, output, i, rand_vec);
+
     }
+
 
 }
