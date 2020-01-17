@@ -43,14 +43,16 @@ __device__ __host__ void montecarlo_simulator(input_market_data market_data, inp
 }
 
  // GLOBAL
-/*
-__global__ void GPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output ) {
+
+__global__ void GPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, unsigned * rand_vec) {
 
   int i = threadIdx.x + blockDim.x * blockIdx.x;
 
-  montecarlo_simulator(market_data, option_data, mc_data, output, i);
+  montecarlo_simulator(market_data, option_data, mc_data, output, i, rand_vec);
+
 }
 //
+
 
 __host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data) {
 
@@ -59,6 +61,12 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 	double gpuElapsedTime;
 	cudaEventCreate(&gpuEventStart);
 	cudaEventCreate(&gpuEventStop);
+*/
+// SET RANDOM SEED VECTOR
+
+  unsigned * array = new unsigned[mc_data.N_simulazioni];
+  unsigned * dev_array;
+  set_random_vector(array);
 
 
   int dummy_thread_number = 1000;
@@ -69,18 +77,21 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
   output_statistica * dev_output;
 
 // SOME CUDA SHIT
+  cudaMalloc((void **)&dev_array, dummy_thread_number*sizeof(array));
+  cudaMemcpy(dev_array, array, dummy_thread_number*sizeof(array), cudaMemcpyHostToDevice);
+
   cudaMalloc((void **)&dev_output, dummy_thread_number*sizeof(output_statistica));
   cudaMemcpy(dev_output, output, dummy_thread_number*sizeof(output_statistica), cudaMemcpyHostToDevice);
 
 // INVOCO LA GLOBAL
-  GPU_montecarlo_simulator<<<1,1>>>(market_data, option_data, mc_data, dev_output);
+  GPU_montecarlo_simulator<<<1,1>>>(market_data, option_data, mc_data, dev_output, dev_array);
 
 // SOME CUDA SHIT
   cudaMemcpy(output, dev_output, dummy_thread_number*sizeof(output_statistica), cudaMemcpyDeviceToHost);
   cudaFree(dev_output);
 
 }
-*/
+
 
 // DEVO FARE LA CPU-GPU SIMULATOR
 __host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, unsigned * rand_vec) {
@@ -93,5 +104,20 @@ __host__ void CPU_montecarlo_simulator(input_market_data market_data, input_opti
 
     }
 
+
+}
+
+
+__host__ void CPU_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
+
+  // devo creare qua il vettore rand
+
+  // output_statistica *output = new output_statistica[mc_data.N_simulazioni];
+  // vettore di output glielo debbo passare by reference per farglielo modificare? I guess
+
+  unsigned * array = new unsigned[mc_data.N_simulazioni];
+  set_random_vector(array);
+
+  CPU_montecarlo_simulator(market_data, option_data, mc_data, output, array);
 
 }

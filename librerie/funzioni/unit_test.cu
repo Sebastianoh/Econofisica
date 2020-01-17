@@ -20,13 +20,9 @@ int main() {
 
   std::cout << "" << '\n';
 
-  unsigned * array = new unsigned[mc_data.N_simulazioni];
-
-  set_random_vector(array);
-
   std::cout << "" << '\n';
 
-  CPU_montecarlo_simulator(market_data, option_data, mc_data, output, array);
+  CPU_caller(market_data, option_data, mc_data, output);
 
     for (size_t j = 0; j < 100; j++) {
 
@@ -34,6 +30,8 @@ int main() {
       std::cout << "test dev:   " << output[j].dev_standard << '\n';
 
     }
+
+    // everything is smooth af
 
 
 return 0;
