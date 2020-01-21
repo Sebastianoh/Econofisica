@@ -1,10 +1,14 @@
 cose che vanno:
+	
 	- path
 	- rng
 	- funzioni
 	- data manager
+	- cpu simulator
+	- cpu-gpu caller	
+	- auxiliary generator
 	
+
 cose da provare:
 
-	- test CPU che simula GPU, quindi quello col 'for', con dei dati fissi base
 	- andare a fare i test sulle cuda con la global

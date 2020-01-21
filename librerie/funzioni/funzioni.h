@@ -51,39 +51,28 @@ __global__ void GPU_montecarlo_simulator(input_market_data market_data, input_op
   montecarlo_simulator(market_data, option_data, mc_data, output, i, rand_vec);
 
 }
-//
 
-
-__host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data) {
-
-/*
-  cudaEvent_t gpuEventStart, gpuEventStop;
-	double gpuElapsedTime;
-	cudaEventCreate(&gpuEventStart);
-	cudaEventCreate(&gpuEventStop);
-*/
-// SET RANDOM SEED VECTOR
+__host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
 
   unsigned * array = new unsigned[mc_data.N_simulazioni];
   unsigned * dev_array;
   set_random_vector(array);
 
-
   int dummy_thread_number = 1000;
 
-//CPU OUTPUT VECTOR
-  output_statistica * output = new output_statistica[dummy_thread_number];
-//DEV OUTPUT VECTOR
+// il vettore di output glielo passo dalla funzia
   output_statistica * dev_output;
 
-// SOME CUDA SHIT
+// rand vec
   cudaMalloc((void **)&dev_array, dummy_thread_number*sizeof(array));
   cudaMemcpy(dev_array, array, dummy_thread_number*sizeof(array), cudaMemcpyHostToDevice);
 
+// output vec
   cudaMalloc((void **)&dev_output, dummy_thread_number*sizeof(output_statistica));
   cudaMemcpy(dev_output, output, dummy_thread_number*sizeof(output_statistica), cudaMemcpyHostToDevice);
 
 // INVOCO LA GLOBAL
+// dovrei passare la struct dati gpu
   GPU_montecarlo_simulator<<<1,1>>>(market_data, option_data, mc_data, dev_output, dev_array);
 
 // SOME CUDA SHIT
@@ -109,11 +98,6 @@ __host__ void CPU_montecarlo_simulator(input_market_data market_data, input_opti
 
 
 __host__ void CPU_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
-
-  // devo creare qua il vettore rand
-
-  // output_statistica *output = new output_statistica[mc_data.N_simulazioni];
-  // vettore di output glielo debbo passare by reference per farglielo modificare? I guess
 
   unsigned * array = new unsigned[mc_data.N_simulazioni];
   set_random_vector(array);

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream>
-#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
+#include "../funzioni/struct.h"
 
 // #include "resultsManager.cu"
 
