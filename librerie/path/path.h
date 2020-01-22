@@ -1,7 +1,7 @@
 #ifndef __path_h__
 #define __path_h__
 
-#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
+#include "../funzioni/struct.h"
 
 class path {
 

@@ -3,9 +3,10 @@
 #include <cstdlib>
 #include <iostream>
 #include "struct.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/path/path.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/statistica/statistica.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/random_generator/rng.cuh"
+#include "../path/path.h"
+#include "../statistica/statistica.h"
+#include "../random_generator/rng.cuh"
+
 
 __host__ void set_random_vector (unsigned  * &(array)) {
 

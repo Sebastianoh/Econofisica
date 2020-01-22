@@ -1,7 +1,7 @@
 #ifndef __statistica_h__
 #define __statistica_h__
 
-#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
+#include "../funzioni/struct.h"
 
 class statistica {
 

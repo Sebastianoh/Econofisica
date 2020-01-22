@@ -4,9 +4,9 @@
 #include <cstdlib>
 #include "struct.h"
 #include "funzioni.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/path/path.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/statistica/statistica.h"
-#include "/home/sebastiano/Scrivania/airoldi/librerie/random_generator/rng.cuh"
+#include "../path/path.h"
+#include "../statistica/statistica.h"
+#include "../random_generator/rng.cuh"
 
 //14-11 PROBLEMA! Devo resettare il prezzo iniziale o si incrementa sempre e non è buono
 

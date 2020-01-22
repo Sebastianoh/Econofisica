@@ -31,11 +31,11 @@ int main() {
   CPU_caller(market_data, option_data, mc_data, output_cpu);
   std::cout << "CPU simulation ended ...." << '\n';
 
-/*
-std::cout << "begin GPU simulation ...." << '\n';
 
-global_caller(market_data, option_data, mc_data, output_gpu);
-*/
+  std::cout << "begin GPU simulation ...." << '\n';
+
+  global_caller(market_data, option_data, mc_data, output_gpu);
+
   return 0;
 
 }
