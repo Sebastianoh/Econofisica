@@ -1,6 +1,6 @@
 TARGETS=resultsManager.o unit_test.o
 
-NVCC=nvcc
+NVCC=nvcc -std=c++11
 
 ECHO=/bin/echo
 

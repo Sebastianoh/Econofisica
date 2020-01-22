@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include "/home/sebastiano/Scrivania/airoldi/librerie/funzioni/struct.h"
+#include "../funzioni/struct.h"
 #include "statistica.h"
 
 using namespace std;

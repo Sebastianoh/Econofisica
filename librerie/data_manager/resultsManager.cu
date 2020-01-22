@@ -1,5 +1,5 @@
 #include <vector>
-#include <string>
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include "resultsManager.h"
@@ -10,7 +10,7 @@ using namespace std;
 void resultsManager::Set_structs_value( input_market_data &x, input_option_data &y, input_mc_data &z, std::string file) {
   vector<string> data_vector;
   ifstream myfile;
-  myfile.open(file);
+  myfile.open(file.c_str());
 
     if (myfile.is_open()) {
       std::cout << "file is open" << '\n';
@@ -49,7 +49,7 @@ void resultsManager::Set_structs_value( input_market_data &x, input_option_data 
 void resultsManager::Set_output_file(string file) {
 
   ofstream myfile;
-  myfile.open(file);
+  myfile.open(file.c_str());
 
   if (myfile.is_open()) {
     std::cout << "file is open " << '\n';
