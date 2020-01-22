@@ -31,6 +31,7 @@ int main() {
   CPU_caller(market_data, option_data, mc_data, output_cpu);
   std::cout << "CPU simulation ended ...." << '\n';
 
+  delete[] output_cpu;  
 
   std::cout << "begin GPU simulation ...." << '\n';
 
