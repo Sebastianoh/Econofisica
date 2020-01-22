@@ -55,31 +55,48 @@ __global__ void GPU_montecarlo_simulator(input_market_data market_data, input_op
 
 __host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
 
-  unsigned * array = new unsigned[mc_data.N_simulazioni];
-  unsigned * dev_array;
+  std::cout << " test -2 " << '\n';
+	
+	int *dev_a;
+	cudaMalloc((void**)&dev_a, 2*sizeof(int));
+
+  unsigned *array = new unsigned[mc_data.N_simulazioni];
+  unsigned *dev_array;
   set_random_vector(array);
 
-  int dummy_thread_number = 1000;
+
 
 // il vettore di output glielo passo dalla funzia
   output_statistica * dev_output;
 
 // rand vec
-  cudaMalloc((void **)&dev_array, dummy_thread_number*sizeof(array));
-  cudaMemcpy(dev_array, array, dummy_thread_number*sizeof(array), cudaMemcpyHostToDevice);
+	std::cout <<" ho il diocane " << '\n';
+  cudaMalloc((void **)&dev_array, sizeof(unsigned));
+  std::cout << " test -1 " << '\n';
+  cudaMemcpy(dev_array, array, sizeof(double), cudaMemcpyHostToDevice);
+
+	  std::cout << "test 0" << '\n';
 
 // output vec
-  cudaMalloc((void **)&dev_output, dummy_thread_number*sizeof(output_statistica));
-  cudaMemcpy(dev_output, output, dummy_thread_number*sizeof(output_statistica), cudaMemcpyHostToDevice);
+  cudaMalloc((void **)&dev_output, mc_data.N_simulazioni*sizeof(output_statistica));
+  cudaMemcpy(dev_output, output, mc_data.N_simulazioni*sizeof(output_statistica), cudaMemcpyHostToDevice);
 
 // INVOCO LA GLOBAL
 // dovrei passare la struct dati gpu
+
+  std::cout << "test 1" << '\n';
+
+
   GPU_montecarlo_simulator<<<1,1>>>(market_data, option_data, mc_data, dev_output, dev_array);
 
-// SOME CUDA SHIT
-  cudaMemcpy(output, dev_output, dummy_thread_number*sizeof(output_statistica), cudaMemcpyDeviceToHost);
-  cudaFree(dev_output);
+  std::cout << "test 2" << '\n';
 
+
+  cudaMemcpy(output, dev_output, mc_data.N_simulazioni*sizeof(output_statistica), cudaMemcpyDeviceToHost);
+  cudaFree(dev_output);
+  cudaFree(dev_array);
+
+  delete[] array, dev_array;
 }
 
 
@@ -104,5 +121,7 @@ __host__ void CPU_caller(input_market_data market_data, input_option_data option
   set_random_vector(array);
 
   CPU_montecarlo_simulator(market_data, option_data, mc_data, output, array);
+ 
+  delete[] array;
 
 }

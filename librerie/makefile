@@ -1,6 +1,6 @@
 TARGETS=./random_generator/rng.o ./path/path.o ./statistica/statistica.o ./data_manager/resultsManager.o main.o
 
-NVCC=nvcc -std=c++11
+NVCC=nvcc -std=c++11 -Wno-deprecated-gpu-targets
 
 ECHO=/bin/echo
 
