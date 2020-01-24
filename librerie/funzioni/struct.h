@@ -31,10 +31,19 @@ struct input_option_data {
 struct input_mc_data {
 
 	int N_simulazioni;
-	int N_tb; //numero thread per blocco
-	int N_b; // numero blocchi
+	// int N_tb; //numero thread per blocco
+	// int N_b; // numero blocchi
 
 };
+
+struct input_gpu_data {
+
+	int numero_blocchi;
+	int numero_thread_per_blocco;
+	int numero_thread_totali;
+
+};
+
 
 struct output_statistica {
 
@@ -51,8 +60,5 @@ struct output_mc_data {
 	int tick; //tempo di calcolo in ms
 
 };
-
-
-
 
 #endif
