@@ -8,13 +8,14 @@
 #include "../random_generator/rng.cuh"
 
 
-__host__ void set_random_vector (unsigned  * &(array)) {
+__host__ void set_random_vector (unsigned  * array) {
 
-  for (size_t i = 0; i < 10000; i++) {
+  for (size_t i = 0; i < 1000; i++) {
     array[i] = rand() % 128 + 100000;
 
   }
 }
+
 
 __device__ __host__ void montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, int thread_number, unsigned * rand_vec) {
 
@@ -99,15 +100,20 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 
 
 // DEVO FARE LA CPU-GPU SIMULATOR
-__host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, unsigned * rand_vec) {
+__host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
 
   int dummy_thread_number = 1000;
 
-    for (size_t i = 0; i < dummy_thread_number ; i++) {
+  unsigned * rand_vec = new unsigned[mc_data.N_simulazioni];
+  set_random_vector(rand_vec);
+
+    for (int i = 0; i < dummy_thread_number ; i++) {
 
       montecarlo_simulator(market_data, option_data, mc_data, output, i, rand_vec);
 
     }
+
+  delete[] rand_vec;
 
 
 }
@@ -115,15 +121,11 @@ __host__ void CPU_montecarlo_simulator(input_market_data market_data, input_opti
 
 __host__ void CPU_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
 
-  unsigned * array = new unsigned[mc_data.N_simulazioni];
-  set_random_vector(array);
-
   std::cout << "test 1" << '\n';
 
-  CPU_montecarlo_simulator(market_data, option_data, mc_data, output, array);
+  CPU_montecarlo_simulator(market_data, option_data, mc_data, output);
 
   std::cout << "test 2" << '\n';
 
-  // delete[] array;
 
 }
