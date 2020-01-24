@@ -56,15 +56,13 @@ __global__ void GPU_montecarlo_simulator(input_market_data market_data, input_op
 __host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output) {
 
   std::cout << " test -2 " << '\n';
-	
+
 	int *dev_a;
 	cudaMalloc((void**)&dev_a, 2*sizeof(int));
 
   unsigned *array = new unsigned[mc_data.N_simulazioni];
   unsigned *dev_array;
   set_random_vector(array);
-
-
 
 // il vettore di output glielo passo dalla funzia
   output_statistica * dev_output;
@@ -120,8 +118,12 @@ __host__ void CPU_caller(input_market_data market_data, input_option_data option
   unsigned * array = new unsigned[mc_data.N_simulazioni];
   set_random_vector(array);
 
+  std::cout << "test 1" << '\n';
+
   CPU_montecarlo_simulator(market_data, option_data, mc_data, output, array);
- 
-  delete[] array;
+
+  std::cout << "test 2" << '\n';
+
+  // delete[] array;
 
 }
