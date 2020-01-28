@@ -81,11 +81,11 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
   cudaMemcpy(dev_array3, array3, mc_data.N_simulazioni*sizeof(unsigned), cudaMemcpyHostToDevice);
   cudaMemcpy(dev_array4, array4, mc_data.N_simulazioni*sizeof(unsigned), cudaMemcpyHostToDevice);
 
-  std::cout << "test 0" << '\n';
+  // std::cout << "test 0" << '\n';
 
   output_statistica * dev_output;
 
-  std::cout << "test 1" << '\n';
+  // std::cout << "test 1" << '\n';
 
   cudaMalloc((void **)&dev_output, mc_data.N_simulazioni*sizeof(output_statistica));
   cudaMemcpy(dev_output, output,   mc_data.N_simulazioni*sizeof(output_statistica), cudaMemcpyHostToDevice);
@@ -94,7 +94,7 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 
   cudaMemcpy(output, dev_output, mc_data.N_simulazioni*sizeof(output_statistica), cudaMemcpyDeviceToHost);
 
-  std::cout << "test 2" << '\n';
+  // std::cout << "test 2" << '\n';
 
   cudaFree(dev_output);
   cudaFree(dev_array1);
@@ -134,11 +134,11 @@ __host__ void CPU_montecarlo_simulator(input_market_data market_data, input_opti
 
 __host__ void CPU_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output) {
 
-  std::cout << "test 1" << '\n';
+  // std::cout << "test 1" << '\n';
 
   CPU_montecarlo_simulator(market_data, option_data, mc_data, gpu_data, output);
 
-  std::cout << "test 2" << '\n';
+  // std::cout << "test 2" << '\n';
 
 
 }
