@@ -27,7 +27,7 @@ int main() {
   rsm.Set_structs_value(market_data, option_data, mc_data, gpu_data, input_file);
 
   output_statistica *output_cpu = new output_statistica[mc_data.N_simulazioni];
-  // output_statistica *output_gpu = new output_statistica[mc_data.N_simulazioni];
+  output_statistica *output_gpu = new output_statistica[mc_data.N_simulazioni];
 
   std::cout << "begin CPU simulation ...." << '\n';
   std::cout << " " << '\n';
@@ -37,17 +37,18 @@ int main() {
   std::cout << " " << '\n';
   std::cout << "CPU simulation ended ...." << '\n';
 // ########################################################### //
-/*
+
   std::cout << "begin GPU simulation ...." << '\n';
   std::cout << " " << '\n';
 
-  global_caller(market_data, option_data, mc_data, output_gpu);
+  global_caller(market_data, option_data, mc_data, gpu_data, output_gpu);
 
   std::cout << " " << '\n';
   std::cout << "GPU simulation ended ...." << '\n';
-*/
+
 
   delete[] output_cpu;
+  delete[] output_gpu;
 
   return 0;
 
