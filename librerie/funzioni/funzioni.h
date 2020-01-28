@@ -103,7 +103,7 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
   cudaFree(dev_array4);
 
   delete[] array1, array2, array3, array4;
-  delete[] dev_array1, dev_array2, dev_array3, dev_array4;
+  // delete[] dev_array1, dev_array2, dev_array3, dev_array4;
 
 }
 
