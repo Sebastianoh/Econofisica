@@ -71,22 +71,15 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 
   set_random_vector(array1, array2, array3, array4, mc_data);
 
-// il vettore di output glielo passo dalla funzia
-
-// rand vec
-	std::cout <<" ho il diocane " << '\n';
-
   cudaMalloc((void **)&dev_array1, mc_data.N_simulazioni*sizeof(unsigned));
   cudaMalloc((void **)&dev_array2, mc_data.N_simulazioni*sizeof(unsigned));
   cudaMalloc((void **)&dev_array3, mc_data.N_simulazioni*sizeof(unsigned));
   cudaMalloc((void **)&dev_array4, mc_data.N_simulazioni*sizeof(unsigned));
 
-  std::cout << " test -1 " << '\n';
-
-  cudaMemcpy(dev_array1, array1, mc_data.N_simulazioni*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_array2, array2, mc_data.N_simulazioni*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_array3, array3, mc_data.N_simulazioni*sizeof(double), cudaMemcpyHostToDevice);
-  cudaMemcpy(dev_array4, array4, mc_data.N_simulazioni*sizeof(double), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_array1, array1, mc_data.N_simulazioni*sizeof(unsigned), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_array2, array2, mc_data.N_simulazioni*sizeof(unsigned), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_array3, array3, mc_data.N_simulazioni*sizeof(unsigned), cudaMemcpyHostToDevice);
+  cudaMemcpy(dev_array4, array4, mc_data.N_simulazioni*sizeof(unsigned), cudaMemcpyHostToDevice);
 
 	 std::cout << "test 0" << '\n';
 
