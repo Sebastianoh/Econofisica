@@ -50,7 +50,7 @@ void resultsManager::Set_structs_value( input_market_data &x, input_option_data 
   std::cout << "file has been closed" << '\n';
 
 }
-
+/*
 void resultsManager::Set_output_file(string file) {
 
   ofstream myfile;
@@ -60,4 +60,24 @@ void resultsManager::Set_output_file(string file) {
     std::cout << "file is open " << '\n';
   }
 
+}*/
+
+void resultsManager::Print(string file, output_statistica * array, input_gpu_data gpu_data) {
+
+  ofstream myfile;
+  myfile.open(file.c_str());
+
+    if (myfile.is_open()) {
+
+      std::cout << "file is open " << '\n';
+
+    } else std::cout << "file is not open " << '\n';
+
+    for (size_t i = 0; i < gpu_data.numero_thread_totali; i++) {
+      
+      myfile << array[i].media_payoff;
+      myfile << array[i].dev_standard;
+    }
+
+  myfile.close();
 }

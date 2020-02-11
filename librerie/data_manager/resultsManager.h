@@ -12,9 +12,12 @@ class resultsManager {
 
     resultsManager() {};
 
-    void Set_output_file(std::string file);
-                         //market data //option data //mc_data
+    // void Set_output_file(std::string file);
+
+    //market data //option data //mc_data
+
     void Set_structs_value( input_market_data &x, input_option_data &y, input_mc_data &z, input_gpu_data &w, std::string file);//le varie strutture? i guess)
+    void Print(std::string file, output_statistica * array, input_gpu_data gpu_data); 
 
 };
 

@@ -20,14 +20,15 @@ int main() {
   input_option_data  option_data;
 
   string input_file("./data_manager/input_file.dat");
-  string output_file("./data_manager/output_file.dat");
+  string output_file_cpu("./data_manager/output_file_cpu.dat");
+  string output_file_gpu("./data_manager/output_file_gpu.dat");
 
   resultsManager rsm;
 
   rsm.Set_structs_value(market_data, option_data, mc_data, gpu_data, input_file);
 
-  output_statistica *output_cpu = new output_statistica[mc_data.N_simulazioni];
-  output_statistica *output_gpu = new output_statistica[mc_data.N_simulazioni];
+  output_statistica *output_cpu = new output_statistica[gpu_data.numero_thread_totali];
+  output_statistica *output_gpu = new output_statistica[gpu_data.numero_thread_totali];
 
   std::cout << "begin CPU simulation ...." << '\n';
   std::cout << " " << '\n';
@@ -46,6 +47,8 @@ int main() {
   std::cout << " " << '\n';
   std::cout << "GPU simulation ended ...." << '\n';
 
+  rsm.Print(output_file_cpu, output_cpu, gpu_data);
+  rsm.Print(output_file_gpu, output_gpu, gpu_data);
 
   delete[] output_cpu;
   delete[] output_gpu;
