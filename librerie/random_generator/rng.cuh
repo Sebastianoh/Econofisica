@@ -1,9 +1,9 @@
- #ifndef __rng_cuh__
- #define __rng_cuh__
- // #include "funzioni.h"
+#ifndef __rng_cuh__
+#define __rng_cuh__
+
+#include "auxiliary.h"
 
 class rng {
-
 
   public:
     __device__ __host__ rng();  //default constructor
@@ -19,6 +19,8 @@ class rng {
     __device__ __host__ double Get_uniform();
     // __device__ __host__ void BoxMuller (double &u, double &v);
     __device__ __host__ double Get_gauss();
+
+    __device__ __host__ void set_initial_state(auxiliary* aux);
 
   private:
 

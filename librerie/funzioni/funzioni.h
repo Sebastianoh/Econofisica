@@ -6,32 +6,24 @@
 #include "../path/path.h"
 #include "../statistica/statistica.h"
 #include "../random_generator/rng.cuh"
+#include "../random_generator/auxiliary.h"
 
-
-__host__ void set_random_vector (unsigned * array1, unsigned * array2, unsigned * array3, unsigned * array4, input_mc_data mc_data) {
-
-  for (size_t i = 0; i < mc_data.N_simulazioni; i++) {
-
-    array1[i] = rand() % 128 + 100000;
-    array2[i] = rand() % 128 + 100000;
-    array3[i] = rand() % 128 + 100000;
-    array4[i] = rand() % 128 + 100000;
-
-  }
-}
-
-__device__ __host__ void montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, int thread_number, unsigned * array1, unsigned * array2, unsigned * array3, unsigned * array4) {
+__device__ __host__ void montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, int thread_number, unsigned int seed) {
 
   statistica stat;
   path path_simulator(option_data, market_data);
 
+  auxiliary* auxiliar_generator = new auxiliary(seed + thread_number);
+  rng* thread_generator = new rng;
+  thread_generator->set_initial_state(auxiliar_generator);
+
     for (size_t i = 0; i < mc_data.N_simulazioni; i++) {
 
-      rng  thread_generator(array1[i], array2[i], array3[i], array4[i]);
+      path_simulator.reset_price(market_data);
 
         for (size_t j = 0; j < option_data.numero_steps; j++) {
 
-          path_simulator.eulero(thread_generator.Get_gauss());
+          path_simulator.eulero(thread_generator->Get_gauss());
 
         }
 
@@ -41,14 +33,14 @@ __device__ __host__ void montecarlo_simulator(input_market_data market_data, inp
       output[thread_number].media_payoff = stat.get_media();
       output[thread_number].dev_standard = stat.get_deviazione_standard();
 
-      path_simulator.reset_price(market_data);
+      // std::cout << "test:  " << output[thread_number].media_payoff <<'\n';
 
     }
 
 }
 
  // GLOBAL
-
+/*
 __global__ void GPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, unsigned * array1, unsigned * array2, unsigned * array3, unsigned * array4 ) {
 
   int i = threadIdx.x + blockDim.x * blockIdx.x;
@@ -106,39 +98,35 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
   // delete[] dev_array1, dev_array2, dev_array3, dev_array4;
 
 }
-
+*/
 // DEVO FARE LA CPU-GPU SIMULATOR
-__host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output) {
+__host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output, unsigned int seed) {
+  //
+  // unsigned * rand_vec1 = new unsigned[mc_data.N_simulazioni];
+  // unsigned * rand_vec2 = new unsigned[mc_data.N_simulazioni];
+  // unsigned * rand_vec3 = new unsigned[mc_data.N_simulazioni];
+  // unsigned * rand_vec4 = new unsigned[mc_data.N_simulazioni];
 
-  unsigned * rand_vec1 = new unsigned[mc_data.N_simulazioni];
-  unsigned * rand_vec2 = new unsigned[mc_data.N_simulazioni];
-  unsigned * rand_vec3 = new unsigned[mc_data.N_simulazioni];
-  unsigned * rand_vec4 = new unsigned[mc_data.N_simulazioni];
-
-  set_random_vector(rand_vec1, rand_vec2, rand_vec3, rand_vec4, mc_data);
 
     for (int i = 0; i < gpu_data.numero_thread_totali; i++) {
 
-      montecarlo_simulator(market_data, option_data, mc_data, output, i, rand_vec1, rand_vec2, rand_vec3, rand_vec4);
+      montecarlo_simulator(market_data, option_data, mc_data, output, i, seed);
 
     }
-
-  delete[] rand_vec1;
-  delete[] rand_vec2;
-  delete[] rand_vec3;
-  delete[] rand_vec4;
-
+  // //
+  // delete[] rand_vec1;
+  // delete[] rand_vec2;
+  // delete[] rand_vec3;
+  // delete[] rand_vec4;
+  // //
 
 }
 
 
 __host__ void CPU_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output) {
 
-  // std::cout << "test 1" << '\n';
+  unsigned int seed = 7;
 
-  CPU_montecarlo_simulator(market_data, option_data, mc_data, gpu_data, output);
-
-  // std::cout << "test 2" << '\n';
-
+  CPU_montecarlo_simulator(market_data, option_data, mc_data, gpu_data, output, seed);
 
 }

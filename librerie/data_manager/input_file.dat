@@ -27,6 +27,6 @@
 1000
 ###########__INPUT_GPU_DATA__############
 #__numero_blocchi__#
-1
+10
 #__numero_thread_per_blocco__#
-1
+100

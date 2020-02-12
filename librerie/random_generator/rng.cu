@@ -1,7 +1,8 @@
-#include "rng.cuh"
-#include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
+
+#include "rng.cuh"
 
 __device__ __host__ rng::rng(){
   m_s1 = 0;
@@ -73,3 +74,34 @@ __device__ __host__ double rng::Get_gauss() {
 
     return u;
 };
+
+
+__device__ __host__ void rng::set_initial_state(auxiliary* aux) {
+
+  m_s1 = aux->Get_unsigned_int();
+
+  unsigned seed2, seed3, seed4;
+
+    do {
+
+      seed2 = aux->Get_unsigned_int();
+
+    } while(seed2 < 129);
+
+    do {
+
+      seed3 = aux->Get_unsigned_int();
+
+    } while(seed3 < 129);
+
+    do {
+
+      seed4 = aux->Get_unsigned_int();
+
+    } while(seed4 < 129);
+
+  m_s2 = seed2;
+  m_s3 = seed3;
+  m_s4 = seed4;
+
+}

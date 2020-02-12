@@ -1,4 +1,4 @@
-TARGETS=./random_generator/rng.o ./path/path.o ./statistica/statistica.o ./data_manager/resultsManager.o main.o
+TARGETS=./random_generator/rng.o ./random_generator/auxiliary.o ./path/path.o ./statistica/statistica.o ./data_manager/resultsManager.o main.o
 
 NVCC=nvcc -std=c++11 -Wno-deprecated-gpu-targets
 
