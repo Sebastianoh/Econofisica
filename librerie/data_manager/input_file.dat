@@ -4,12 +4,12 @@
 #__risk_free_rate__#
 0.02
 #__volatility__#
-0.02
+0.2
 ###########__INPUT_OPTION_DATA__###########
 #__option_type__#
-1
+2
 #__numero_steps__#
-10
+100
 #__delta_time__#
 1
 #__time_to_maturity__#
