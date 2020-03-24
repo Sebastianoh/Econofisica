@@ -2,9 +2,9 @@
 #__prezzo_iniziale__#
 100
 #__risk_free_rate__#
-0.02
+0.0001
 #__volatility__#
-0.2
+0.5
 ###########__INPUT_OPTION_DATA__###########
 #__option_type__#
 2
@@ -17,7 +17,7 @@
 #__strike_price__#
 100
 #__B__#
-0
+0.25
 #__K__#
 1
 #__N__#
@@ -27,6 +27,6 @@
 1000
 ###########__INPUT_GPU_DATA__############
 #__numero_blocchi__#
-10
+1
 #__numero_thread_per_blocco__#
-100
+512

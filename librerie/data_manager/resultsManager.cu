@@ -76,7 +76,7 @@ void resultsManager::Print(string file, output_statistica * array, input_gpu_dat
     for (size_t i = 0; i < gpu_data.numero_thread_totali; i++) {
 
       myfile << array[i].media_payoff << '\n';
-      myfile << array[i].dev_standard << '\n';
+      // myfile << array[i].dev_standard << '\n';
     }
 
   myfile.close();

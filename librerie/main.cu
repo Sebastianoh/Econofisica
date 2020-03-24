@@ -48,15 +48,16 @@ int main() {
   // std::cout << "GPU simulation ended ...." << '\n';
   //
 
+/*
 
   for (size_t i = 0; i < 100; i++) {
 
     std::cout << "test:" << output_cpu[i].media_payoff << '\n';
 
   }
+*/
 
-
-  // rsm.Print(output_file_cpu, output_cpu, gpu_data);
+  rsm.Print(output_file_cpu, output_cpu, gpu_data);
   // rsm.Print(output_file_gpu, output_gpu, gpu_data);
 
   delete[] output_cpu;
