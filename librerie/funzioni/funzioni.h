@@ -25,6 +25,7 @@ __device__ __host__ void montecarlo_simulator(input_market_data market_data, inp
 
           path_simulator.eulero(thread_generator->Get_gauss());
           // path_simulator.exact(thread_generator->Get_gauss());
+
         }
 
       path_simulator.payoff_evaluator();
@@ -32,8 +33,6 @@ __device__ __host__ void montecarlo_simulator(input_market_data market_data, inp
 
       output[thread_number].media_payoff = stat.get_media();
       output[thread_number].dev_standard = stat.get_deviazione_standard();
-
-      // std::cout << "test:  " << output[thread_number].media_payoff <<'\n';
 
     }
 
@@ -51,7 +50,7 @@ __global__ void GPU_montecarlo_simulator(input_market_data market_data, input_op
 
 __host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output) {
 
-  unsigned int seed = 22;
+  unsigned int seed = 7;
 
   output_statistica * dev_output;
 
