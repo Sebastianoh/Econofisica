@@ -23,8 +23,8 @@ __device__ __host__ void montecarlo_simulator(input_market_data market_data, inp
 
         for (size_t j = 0; j < option_data.numero_steps; j++) {
 
-          path_simulator.eulero(thread_generator->Get_gauss());
-          // path_simulator.exact(thread_generator->Get_gauss());
+//          path_simulator.eulero(thread_generator->Get_gauss());
+            path_simulator.exact(thread_generator->Get_gauss());
 
         }
 
@@ -56,11 +56,11 @@ __host__ void global_caller(input_market_data market_data, input_option_data opt
 
   cudaMalloc((void **)&dev_output, gpu_data.numero_thread_totali*sizeof(output_statistica));
   cudaMemcpy(dev_output, output,   gpu_data.numero_thread_totali*sizeof(output_statistica), cudaMemcpyHostToDevice);
-
-  GPU_montecarlo_simulator<<<gpu_data.numero_thread_per_blocco,gpu_data.numero_blocchi>>>(market_data, option_data, mc_data, dev_output, seed);
-
+std::cout << "test 1" << '\n';
+  GPU_montecarlo_simulator<<<gpu_data.numero_blocchi,gpu_data.numero_thread_per_blocco>>>(market_data, option_data, mc_data, dev_output, seed);
+std::cout << "test 2" << '\n';
   cudaMemcpy(output, dev_output, gpu_data.numero_thread_totali*sizeof(output_statistica), cudaMemcpyDeviceToHost);
-
+ std::cout << "test 3" << '\n';
   cudaFree(dev_output);
 
 }

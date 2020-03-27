@@ -38,6 +38,10 @@ int main() {
 //  std::cout << " " << '\n';
 //  std::cout << "CPU simulation ended ...." << '\n';
 // ########################################################### //
+  
+  cout <<"thread: " << gpu_data.numero_thread_per_blocco << '\n';	 
+  cout <<"blocchi: " << gpu_data.numero_blocchi << '\n';
+  cout <<"thread totali: " << gpu_data.numero_thread_totali << '\n';	
 
   std::cout << "begin GPU simulation ...." << '\n';
   std::cout << " " << '\n';

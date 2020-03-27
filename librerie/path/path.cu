@@ -106,7 +106,7 @@ __device__ __host__ void path::eulero(double gauss) {
 __device__ __host__ void  path::exact(double gauss) {
 
   double price_i;
-  price_i = m_price * exp(m_risk_free_rate -0.5*pow(m_volatility,2)*(m_delta_time)
+  price_i = m_price * exp((m_risk_free_rate -0.5*pow(m_volatility,2))*(m_delta_time)
           + m_volatility*gauss*sqrt(m_delta_time));
 
     if (m_option_type == 2) {
