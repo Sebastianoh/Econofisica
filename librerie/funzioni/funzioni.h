@@ -1,12 +1,15 @@
 #include <cmath>
+#include <string>
 #include <iomanip>
 #include <cstdlib>
 #include <iostream>
+
 #include "struct.h"
 #include "../path/path.h"
 #include "../statistica/statistica.h"
 #include "../random_generator/rng.cuh"
 #include "../random_generator/auxiliary.h"
+#include "../data_manager/resultsManager.h"
 
 __device__ __host__ void montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, output_statistica* output, int thread_number, unsigned int seed) {
 
@@ -48,21 +51,39 @@ __global__ void GPU_montecarlo_simulator(input_market_data market_data, input_op
 
 }
 
-__host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output) {
+__host__ void global_caller(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data /*, output_statistica* output*/) {
+
+  std::string output_file_gpu("./data_manager/output_file_gpu.dat");
 
   unsigned int seed = 7;
+
+  resultsManager printer;
+
+  output_statistica *output_gpu = new output_statistica[gpu_data.numero_thread_totali];
 
   output_statistica * dev_output;
 
   cudaMalloc((void **)&dev_output, gpu_data.numero_thread_totali*sizeof(output_statistica));
+<<<<<<< HEAD
   cudaMemcpy(dev_output, output,   gpu_data.numero_thread_totali*sizeof(output_statistica), cudaMemcpyHostToDevice);
 std::cout << "test 1" << '\n';
   GPU_montecarlo_simulator<<<gpu_data.numero_blocchi,gpu_data.numero_thread_per_blocco>>>(market_data, option_data, mc_data, dev_output, seed);
 std::cout << "test 2" << '\n';
   cudaMemcpy(output, dev_output, gpu_data.numero_thread_totali*sizeof(output_statistica), cudaMemcpyDeviceToHost);
  std::cout << "test 3" << '\n';
+=======
+  cudaMemcpy(dev_output, output_gpu,   gpu_data.numero_thread_totali*sizeof(output_statistica), cudaMemcpyHostToDevice);
+
+  GPU_montecarlo_simulator<<<gpu_data.numero_thread_per_blocco,gpu_data.numero_blocchi>>>(market_data, option_data, mc_data, dev_output, seed);
+
+  cudaMemcpy(output_gpu, dev_output, gpu_data.numero_thread_totali*sizeof(output_statistica), cudaMemcpyDeviceToHost);
+
+>>>>>>> 953f011e94024642be608ac83ff90c0e549bb020
   cudaFree(dev_output);
 
+  printer.Print(output_file_gpu, output_gpu, gpu_data);
+
+  delete[] output_gpu;
 }
 // DEVO FARE LA CPU-GPU SIMULATOR
 __host__ void CPU_montecarlo_simulator(input_market_data market_data, input_option_data option_data, input_mc_data mc_data, input_gpu_data gpu_data, output_statistica* output, unsigned int seed) {
